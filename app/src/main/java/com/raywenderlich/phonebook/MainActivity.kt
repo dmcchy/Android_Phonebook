@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -16,7 +17,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var contactEntriesRecyclerView: RecyclerView
+    private val TAG = "MainActivity"
+    private val contactDataManager: ContactDataManager = ContactDataManager(this)
+
+    private lateinit var contactEntriesRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,33 +57,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showCreateListDialogue_OLD() {
-        val dialogTitle = "Contact Details"
-        val positiveButtonTitle = "Create"
-
-        val builder = AlertDialog.Builder(this)
-        val listTitleEditText = EditText(this)
-
-        listTitleEditText.inputType = InputType.TYPE_CLASS_TEXT
-
-        builder.setTitle(dialogTitle)
-        builder.setView(listTitleEditText)
-
-        builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
-
-        }
-
-        builder.create().show()
-
-        // New one - to add multiple fields.
-        val linearLayout = LinearLayout(this)
-
-        val listTitleEditText2 = EditText(this)
-        val listTitleEditText3 = EditText(this)
-
-        linearLayout
-
-    }
+//    private fun showCreateListDialogue_OLD() {
+//        val dialogTitle = "Contact Details"
+//        val positiveButtonTitle = "Create"
+//
+//        val builder = AlertDialog.Builder(this)
+//        val listTitleEditText = EditText(this)
+//
+//        listTitleEditText.inputType = InputType.TYPE_CLASS_TEXT
+//
+//        builder.setTitle(dialogTitle)
+//        builder.setView(listTitleEditText)
+//
+//        builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
+//
+//        }
+//
+//        builder.create().show()
+//
+//        // New one - to add multiple fields.
+//        val linearLayout = LinearLayout(this)
+//
+//        val listTitleEditText2 = EditText(this)
+//        val listTitleEditText3 = EditText(this)
+//
+//        linearLayout
+//
+//    }
 
     private fun showCreateListDialogue() {
         val dialogTitle = "Contact Details"
@@ -113,7 +117,19 @@ class MainActivity : AppCompatActivity() {
         builder.setView(linearLayout)
 
         builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
+            // Here is where I put the listener once I click my button
+            // I will put the items inside a contact list.
+            var contact = ContactList(
+                mobileNumberText.text.toString(),
+                lastNameText.text.toString(),
+                firstNameText.text.toString()
+            )
 
+            contactDataManager.saveList(contact)
+
+            // Log.v(TAG, mobileNumberText.text.toString())
+            // Log.v(TAG, lastNameText.text.toString())
+            // Log.v(TAG, firstNameText.text.toString())
         }
 
         builder.create().show()
