@@ -2,11 +2,15 @@ package com.raywenderlich.phonebook
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import android.widget.LinearLayout
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,8 +24,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+
+            showCreateListDialogue()
         }
 
         // Initialize the RecyclerView here.
@@ -45,5 +51,72 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showCreateListDialogue_OLD() {
+        val dialogTitle = "Contact Details"
+        val positiveButtonTitle = "Create"
+
+        val builder = AlertDialog.Builder(this)
+        val listTitleEditText = EditText(this)
+
+        listTitleEditText.inputType = InputType.TYPE_CLASS_TEXT
+
+        builder.setTitle(dialogTitle)
+        builder.setView(listTitleEditText)
+
+        builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
+
+        }
+
+        builder.create().show()
+
+        // New one - to add multiple fields.
+        val linearLayout = LinearLayout(this)
+
+        val listTitleEditText2 = EditText(this)
+        val listTitleEditText3 = EditText(this)
+
+        linearLayout
+
+    }
+
+    private fun showCreateListDialogue() {
+        val dialogTitle = "Contact Details"
+        val positiveButtonTitle = "Create"
+
+        val builder = AlertDialog.Builder(this)
+
+        // New one - to add multiple fields.
+        val linearLayout = LinearLayout(this)
+
+        linearLayout.orientation = LinearLayout.VERTICAL
+
+        val mobileNumberText = EditText(this)
+        val lastNameText = EditText(this)
+        val firstNameText = EditText(this)
+
+        mobileNumberText.inputType = InputType.TYPE_CLASS_TEXT
+        mobileNumberText.hint = "Mobile Number"
+
+        lastNameText.inputType = InputType.TYPE_CLASS_TEXT
+        lastNameText.hint = "Last Name"
+
+        firstNameText.inputType = InputType.TYPE_CLASS_TEXT
+        firstNameText.hint = "First Name"
+
+        linearLayout.addView(mobileNumberText)
+        linearLayout.addView(lastNameText)
+        linearLayout.addView(firstNameText)
+
+        builder.setTitle(dialogTitle)
+        builder.setView(linearLayout)
+
+        builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
+
+        }
+
+        builder.create().show()
+
     }
 }
