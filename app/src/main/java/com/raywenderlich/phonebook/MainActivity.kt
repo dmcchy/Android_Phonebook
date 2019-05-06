@@ -17,6 +17,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val INTENT_LIST_KEY = "list"
+    }
+
     private val TAG = "MainActivity"
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
 
