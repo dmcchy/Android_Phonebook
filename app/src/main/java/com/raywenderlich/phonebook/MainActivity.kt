@@ -1,5 +1,6 @@
 package com.raywenderlich.phonebook
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -114,9 +115,19 @@ class MainActivity : AppCompatActivity() {
             recyclerAdapter.addContact(contact)
 
             dialog.dismiss()
+            showContactDetail(contact)
 
         }
 
         builder.create().show()
+    }
+
+    private fun showContactDetail(contact: ContactList) {
+        val contactDetailIntent = Intent(this, ContactDetailActivity::class.java)
+
+        contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)
+
+        // "startActivity" is a native method.
+        startActivity(contactDetailIntent)
     }
 }
