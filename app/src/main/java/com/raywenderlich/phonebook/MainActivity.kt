@@ -22,12 +22,40 @@ class MainActivity : AppCompatActivity(),
 
     companion object {
         val INTENT_LIST_KEY = "list"
+        val CONTACT_INTERACTION_REQUEST_CODE = 123
     }
 
     private val TAG = "MainActivity"
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
 
     private lateinit var contactEntriesRecyclerView: RecyclerView
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CONTACT_INTERACTION_REQUEST_CODE) {
+
+            data?.let {
+                Log.v("Hello", "Must be here")
+                var contact: ContactList = data.getParcelableExtra(INTENT_LIST_KEY)
+
+                Log.v("Hello r length is A: ", contact.interactions.size.toString())
+                Log.v("Hello fname is: ", contact.firstName)
+                Log.v("Hello lname is: ", contact.lastName)
+
+                contactDataManager.saveList(data.getParcelableExtra(INTENT_LIST_KEY))
+                updateContactEntries()
+            }
+        }
+    }
+
+    private fun updateContactEntries() {
+        val contactEntries = contactDataManager.readLists()
+        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
+            contactEntries,
+            this
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +158,7 @@ class MainActivity : AppCompatActivity(),
         contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)
 
         // "startActivity" is a native method.
-        startActivity(contactDetailIntent)
+        startActivityForResult(contactDetailIntent, CONTACT_INTERACTION_REQUEST_CODE)
     }
 
     override fun contactItemClicked(contact: ContactList) {

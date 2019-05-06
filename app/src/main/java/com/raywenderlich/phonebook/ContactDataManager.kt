@@ -2,6 +2,7 @@ package com.raywenderlich.phonebook
 
 import android.content.Context
 import android.preference.PreferenceManager
+import android.util.Log
 
 // Context is the current state of the application,
 // in this case we use context to fetch our sharedPreferences
@@ -13,6 +14,8 @@ class ContactDataManager(val context: Context) {
             .edit()
 
         val key = contact.mobileNumber + ',' + contact.firstName + ',' + contact.lastName
+
+        Log.v("Hello r length is B: ", contact.interactions.size.toString())
 
         sharedPreferences.putStringSet(key, contact.interactions.toHashSet())
         sharedPreferences.apply()

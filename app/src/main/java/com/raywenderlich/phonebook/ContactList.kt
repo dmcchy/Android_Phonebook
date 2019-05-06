@@ -17,7 +17,8 @@ class ContactList (
         // will determine the number of string source readStrings?
         source.readString(),
         source.readString(),
-        source.readString()
+        source.readString(),
+        source.createStringArrayList()
     ) {
         
     }
@@ -26,6 +27,7 @@ class ContactList (
         desc.writeString(mobileNumber)
         desc.writeString(lastName)
         desc.writeString(firstName)
+        desc.writeStringList(interactions)
     }
 
     override fun describeContents(): Int {
