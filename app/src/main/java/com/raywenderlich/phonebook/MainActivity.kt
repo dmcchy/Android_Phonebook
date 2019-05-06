@@ -16,7 +16,9 @@ import android.widget.LinearLayout
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+        ContactEntriesRecyclerViewAdapter.ContactEntriesRecyclerViewClickListener
+{
 
     companion object {
         val INTENT_LIST_KEY = "list"
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         contactEntriesRecyclerView = findViewById(R.id.contacts_recyclerview)
         contactEntriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(contacts)
+        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(contacts, this)
 
     }
 
@@ -129,5 +131,9 @@ class MainActivity : AppCompatActivity() {
 
         // "startActivity" is a native method.
         startActivity(contactDetailIntent)
+    }
+
+    override fun contactItemClicked(contact: ContactList) {
+        showContactDetail(contact)
     }
 }
