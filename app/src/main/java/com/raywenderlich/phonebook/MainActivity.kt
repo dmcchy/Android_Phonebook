@@ -28,16 +28,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-
             showCreateListDialogue()
         }
 
         // Initialize the RecyclerView here.
+        val contacts = contactDataManager.readLists()
+
         contactEntriesRecyclerView = findViewById(R.id.contacts_recyclerview)
         contactEntriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter()
+        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(contacts)
 
     }
 
@@ -56,34 +55,6 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-//    private fun showCreateListDialogue_OLD() {
-//        val dialogTitle = "Contact Details"
-//        val positiveButtonTitle = "Create"
-//
-//        val builder = AlertDialog.Builder(this)
-//        val listTitleEditText = EditText(this)
-//
-//        listTitleEditText.inputType = InputType.TYPE_CLASS_TEXT
-//
-//        builder.setTitle(dialogTitle)
-//        builder.setView(listTitleEditText)
-//
-//        builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
-//
-//        }
-//
-//        builder.create().show()
-//
-//        // New one - to add multiple fields.
-//        val linearLayout = LinearLayout(this)
-//
-//        val listTitleEditText2 = EditText(this)
-//        val listTitleEditText3 = EditText(this)
-//
-//        linearLayout
-//
-//    }
 
     private fun showCreateListDialogue() {
         val dialogTitle = "Contact Details"
@@ -116,6 +87,12 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle(dialogTitle)
         builder.setView(linearLayout)
 
+
+        /**
+         * This is the modal function which serves 2 purposes:
+         * 1. Save the new entries in the recyclerViewAdapter so it can be immediately rendered on the screen.
+         * 2. Save the new entries in the context so it can be persisted on the next reload.
+         */
         builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
             // Here is where I put the listener once I click my button
             // I will put the items inside a contact list.
@@ -127,12 +104,15 @@ class MainActivity : AppCompatActivity() {
 
             contactDataManager.saveList(contact)
 
-            // Log.v(TAG, mobileNumberText.text.toString())
-            // Log.v(TAG, lastNameText.text.toString())
-            // Log.v(TAG, firstNameText.text.toString())
+            // Also add it to the recycler adapter.
+            val recyclerAdapter = contactEntriesRecyclerView.adapter as
+                    ContactEntriesRecyclerViewAdapter
+            recyclerAdapter.addContact(contact)
+
+            dialog.dismiss()
+
         }
 
         builder.create().show()
-
     }
 }

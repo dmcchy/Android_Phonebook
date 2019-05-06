@@ -12,11 +12,38 @@ class ContactDataManager(val context: Context) {
             .getDefaultSharedPreferences(context)
             .edit()
 
-        sharedPreferences.putStringSet(contact.mobileNumber, contact.contacts.toHashSet())
+        val key = contact.mobileNumber + ',' + contact.firstName + ',' + contact.lastName
+
+        sharedPreferences.putStringSet(key, contact.interactions.toHashSet())
         sharedPreferences.apply()
     }
 
-    fun readLists() {
+    // : ArrayList<ContactList>
+    fun readLists(): ArrayList<ContactList> {
+        val sharedPreferences = PreferenceManager
+            .getDefaultSharedPreferences(context)
+        val sharedPreferencesContents = sharedPreferences.all
 
+        // Log.v("ContactDataManager", sharedPreferencesContents.size.toString())
+
+        val contactLists = ArrayList<ContactList>()
+
+        for (contactList in sharedPreferencesContents) {
+
+            // Log.v("ContactDataManager", contactList.value.toString())
+
+            val contactListDetails = contactList.key.split(',')
+
+            val firstName = contactListDetails[1]
+            val lastName = contactListDetails[2]
+            val mobileNumber = contactListDetails[0]
+
+            val itemsHashList = contactList.value as HashSet<String>
+            val contactList = ContactList(mobileNumber, lastName, firstName, ArrayList(itemsHashList) )
+
+            contactLists.add(contactList)
+        }
+
+        return contactLists
     }
 }
