@@ -1,12 +1,9 @@
 package com.raywenderlich.phonebook
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.util.Log
@@ -18,7 +15,7 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-        ContactDetailsFragment.OnFragmentInteractionListener
+        ContactEntriesFragment.OnFragmentInteractionListener
 {
 
     companion object {
@@ -28,6 +25,9 @@ class MainActivity : AppCompatActivity(),
 
     private val TAG = "MainActivity"
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
+
+    private var contactEntriesFragment: ContactEntriesFragment =
+        ContactEntriesFragment.newInstance()
 
     private lateinit var contactEntriesRecyclerView: RecyclerView
 
@@ -130,9 +130,8 @@ class MainActivity : AppCompatActivity(),
          * 2. Save the new entries in the context so it can be persisted on the next reload.
          */
         builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
-            // Here is where I put the listener once I click my button
-            // I will put the items inside a contact list.
-            var contact = ContactList(
+            // Hold off here.
+            /*var contact = ContactList(
                 mobileNumberText.text.toString(),
                 lastNameText.text.toString(),
                 firstNameText.text.toString()
@@ -146,7 +145,7 @@ class MainActivity : AppCompatActivity(),
             recyclerAdapter.addContact(contact)
 
             dialog.dismiss()
-            showContactDetail(contact)
+            showContactDetail(contact)*/
 
         }
 
