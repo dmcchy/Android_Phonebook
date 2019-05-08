@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity(),
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
 
     private var fragmentContainer: FrameLayout? = null
+    private var contactEntriesFragment: ContactEntriesFragment =
+        ContactEntriesFragment.newInstance()
 
     private lateinit var contactEntriesRecyclerView: RecyclerView
 
@@ -63,7 +65,19 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fragmentContainer = findViewById(R.id.fragment_container)
+        // How do I load the fragments?
+        // fragmentContainer = findViewById(R.id.fragment_container)
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(
+                R.id.fragment_container,
+                contactEntriesFragment,
+                getString(R.string.list_fragment_tag)
+            )
+            .addToBackStack(null)
+            .commit()
+
 
         fab.setOnClickListener { view ->
             showCreateListDialogue()
