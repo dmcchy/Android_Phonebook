@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,8 +27,7 @@ class MainActivity : AppCompatActivity(),
     private val TAG = "MainActivity"
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
 
-    private var contactEntriesFragment: ContactEntriesFragment =
-        ContactEntriesFragment.newInstance()
+    private var fragmentContainer: FrameLayout? = null
 
     private lateinit var contactEntriesRecyclerView: RecyclerView
 
@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        fragmentContainer = findViewById(R.id.fragment_container)
 
         fab.setOnClickListener { view ->
             showCreateListDialogue()

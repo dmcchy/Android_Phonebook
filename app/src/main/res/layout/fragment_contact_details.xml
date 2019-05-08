@@ -3,11 +3,11 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".ContactDetailsFragment">
+             tools:context=".ContactDetailsFragment" android:id="@+id/fragment_container">
 
     <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/contact_details_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/contacts_recyclerview"
             android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
 
 </FrameLayout>
