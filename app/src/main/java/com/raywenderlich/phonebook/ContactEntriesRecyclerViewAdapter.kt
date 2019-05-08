@@ -36,14 +36,12 @@ class ContactEntriesRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ContactEntriesViewHolder, position: Int) {
-        if (holder != null) {
-            holder.contactFirstName.text = contacts[position].firstName
-            holder.contactLastName.text = contacts[position].lastName
-            holder.contactNumber.text = contacts[position].mobileNumber
+        holder.contactFirstName.text = contacts[position].firstName
+        holder.contactLastName.text = contacts[position].lastName
+        holder.contactNumber.text = contacts[position].mobileNumber
 
-            holder.itemView.setOnClickListener() {
-                clickListener.contactItemClicked(contacts[position])
-            }
+        holder.itemView.setOnClickListener() {
+            clickListener.contactItemClicked(contacts[position])
         }
     }
 

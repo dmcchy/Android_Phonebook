@@ -8,7 +8,7 @@ class ContactInteractionsRecyclerViewAdapter(val contact: ContactList):
     RecyclerView.Adapter<ContactInteractionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, holder: Int): ContactInteractionViewHolder {
-        val view = LayoutInflater.from(parent?.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.interactions_view_holder, parent, false)
 
         return ContactInteractionViewHolder(view)
@@ -19,8 +19,6 @@ class ContactInteractionsRecyclerViewAdapter(val contact: ContactList):
     }
 
     override fun onBindViewHolder(holder: ContactInteractionViewHolder, position: Int) {
-        if (holder != null) {
-            holder.contactInteractionView.text = contact.interactions[position]
-        }
+        holder.contactInteractionView.text = contact.interactions[position]
     }
 }
