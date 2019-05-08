@@ -47,7 +47,7 @@ class ContactDetailsFragment : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+
     }
 
     override fun onAttach(context: Context) {
@@ -77,7 +77,7 @@ class ContactDetailsFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onContactItemClicked(contact: ContactList)
     }
 
     companion object {

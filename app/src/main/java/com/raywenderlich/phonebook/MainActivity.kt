@@ -1,6 +1,7 @@
 package com.raywenderlich.phonebook
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -17,7 +18,7 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-        ContactEntriesRecyclerViewAdapter.ContactEntriesRecyclerViewClickListener
+        ContactDetailsFragment.OnFragmentInteractionListener
 {
 
     companion object {
@@ -50,11 +51,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun updateContactEntries() {
-        val contactEntries = contactDataManager.readLists()
-        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
-            contactEntries,
-            this
-        )
+//        val contactEntries = contactDataManager.readLists()
+//        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
+//            contactEntries,
+//            this
+//        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,11 +68,11 @@ class MainActivity : AppCompatActivity(),
         }
 
         // Initialize the RecyclerView here.
-        val contacts = contactDataManager.readLists()
-
-        contactEntriesRecyclerView = findViewById(R.id.contacts_recyclerview)
-        contactEntriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(contacts, this)
+//        val contacts = contactDataManager.readLists()
+//
+//        contactEntriesRecyclerView = findViewById(R.id.contacts_recyclerview)
+//        contactEntriesRecyclerView.layoutManager = LinearLayoutManager(this)
+//        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(contacts, this)
 
     }
 
@@ -161,7 +162,7 @@ class MainActivity : AppCompatActivity(),
         startActivityForResult(contactDetailIntent, CONTACT_INTERACTION_REQUEST_CODE)
     }
 
-    override fun contactItemClicked(contact: ContactList) {
+    override fun onContactItemClicked(contact: ContactList) {
         showContactDetail(contact)
     }
 }
