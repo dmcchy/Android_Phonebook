@@ -14,9 +14,6 @@ import android.view.ViewGroup
 class ContactEntriesFragment : Fragment(),
     ContactEntriesRecyclerViewAdapter.ContactEntriesRecyclerViewClickListener
 {
-    override fun contactItemClicked(contact: ContactList) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     // Transfer your data manager and recyclerview here.
     lateinit var contactDataManager: ContactDataManager
@@ -24,6 +21,9 @@ class ContactEntriesFragment : Fragment(),
 
     private var listener: OnFragmentInteractionListener? = null
 
+    override fun contactItemClicked(contact: ContactList) {
+        listener?.onContactItemClicked(contact)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
