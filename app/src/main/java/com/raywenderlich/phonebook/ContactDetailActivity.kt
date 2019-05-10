@@ -43,7 +43,7 @@ class ContactDetailActivity : AppCompatActivity() {
         contact = intent.getParcelableExtra(MainActivity.INTENT_LIST_KEY)
         title = contact.firstName
 
-        contactInteractionsRecyclerView = findViewById<RecyclerView>(R.id.contact_interactions_recyclerview)
+        contactInteractionsRecyclerView = findViewById(R.id.contact_interactions_recyclerview)
         contactInteractionsRecyclerView.adapter = ContactInteractionsRecyclerViewAdapter(contact)
         contactInteractionsRecyclerView.layoutManager = LinearLayoutManager(this)
     }

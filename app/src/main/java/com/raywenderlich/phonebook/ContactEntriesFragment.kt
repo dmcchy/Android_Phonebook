@@ -25,6 +25,27 @@ class ContactEntriesFragment : Fragment(),
         listener?.onContactItemClicked(contact)
     }
 
+    fun saveInteractions(contact: ContactList) {
+        contactDataManager.saveList(contact)
+        updateContactEntries()
+    }
+
+    private fun updateContactEntries() {
+        val contactEntries = contactDataManager.readLists()
+        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
+            contactEntries,
+            this
+        )
+    }
+
+    fun addContact(contact: ContactList) {
+        contactDataManager.saveList(contact)
+
+        val recyclerViewAdapter = contactEntriesRecyclerView.adapter as
+                ContactEntriesRecyclerViewAdapter
+        recyclerViewAdapter.addContact(contact)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

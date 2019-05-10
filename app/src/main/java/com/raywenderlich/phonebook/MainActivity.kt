@@ -1,6 +1,7 @@
 package com.raywenderlich.phonebook
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -16,8 +17,12 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-        ContactEntriesFragment.OnFragmentInteractionListener
+        ContactEntriesFragment.OnFragmentInteractionListener,
+        ContactInteractionsFragment.OnFragmentInteractionListener
 {
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private var largeScreen = false
     private var contactInteractionsFragment: ContactInteractionsFragment? = null
@@ -48,25 +53,18 @@ class MainActivity : AppCompatActivity(),
 
             data?.let {
                 Log.v("Hello", "Must be here")
+                // Wrap it in a parcelable entry.
                 var contact: ContactList = data.getParcelableExtra(INTENT_LIST_KEY)
 
-                Log.v("Hello r length is A: ", contact.interactions.size.toString())
-                Log.v("Hello fname is: ", contact.firstName)
-                Log.v("Hello lname is: ", contact.lastName)
+                // contactEntriesFragment.saveInteractions(contact)
 
-                contactDataManager.saveList(data.getParcelableExtra(INTENT_LIST_KEY))
-                updateContactEntries()
+                // contactDataManager.saveList(data.getParcelableExtra(INTENT_LIST_KEY))
+                // updateContactEntries()
             }
         }
     }
 
-    private fun updateContactEntries() {
-//        val contactEntries = contactDataManager.readLists()
-//        contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
-//            contactEntries,
-//            this
-//        )
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,6 +159,16 @@ class MainActivity : AppCompatActivity(),
          */
         builder.setPositiveButton(positiveButtonTitle) {dialog, i ->
             // Hold off here.
+            var contact = ContactList(
+                mobileNumberText.text.toString(),
+                lastNameText.text.toString(),
+                firstNameText.text.toString()
+            )
+
+            contactEntriesFragment.addContact(contact)
+            dialog.dismiss()
+            // showContactDetail(contact)
+
             /*var contact = ContactList(
                 mobileNumberText.text.toString(),
                 lastNameText.text.toString(),
@@ -184,7 +192,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun showContactDetail(contact: ContactList) {
 
-        if (!largeScreen) {
+        if (!largeScreen || true) {
             val contactDetailIntent = Intent(this, ContactDetailActivity::class.java)
 
             contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)
@@ -195,14 +203,16 @@ class MainActivity : AppCompatActivity(),
 
             contactInteractionsFragment = ContactInteractionsFragment.newInstance(contact)
 
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragment_container,
-                    contactInteractionsFragment!!,
-                    getString(R.string.contact_fragment_tag)
-                )
-                .addToBackStack(null)
-                .commit()
+            contactInteractionsFragment?.let { contactInteractionsFragment ->
+                supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.fragment_container,
+                        contactInteractionsFragment,
+                        getString(R.string.contact_fragment_tag)
+                    )
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
