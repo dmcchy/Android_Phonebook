@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity(),
         ContactEntriesFragment.OnFragmentInteractionListener
 {
 
+    private var largeScreen = false
+    private var listFragment: ContactInteractionsFragment? = null
+
     companion object {
         val INTENT_LIST_KEY = "list"
         val CONTACT_INTERACTION_REQUEST_CODE = 123
@@ -32,6 +35,11 @@ class MainActivity : AppCompatActivity(),
         ContactEntriesFragment.newInstance()
 
     private lateinit var contactEntriesRecyclerView: RecyclerView
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
