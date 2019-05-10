@@ -9,7 +9,7 @@
                                              tools:showIn="@layout/activity_main">
 
     <fragment
-            android:id="@+id/list_selection_fragment"
+            android:id="@+id/contact_entries_fragment"
             android:name="com.raywenderlich.phonebook.ContactEntriesFragment"
             android:layout_width="300dp"
             android:layout_height="match_parent"
@@ -35,6 +35,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/list_selection_fragment"
+            app:layout_constraintStart_toEndOf="@+id/contact_entries_fragment"
             app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

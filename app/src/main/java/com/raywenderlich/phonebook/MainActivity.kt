@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(),
 {
 
     private var largeScreen = false
-    private var listFragment: ContactInteractionsFragment? = null
+    private var contactInteractionsFragment: ContactInteractionsFragment? = null
 
     companion object {
         val INTENT_LIST_KEY = "list"
@@ -76,7 +76,13 @@ class MainActivity : AppCompatActivity(),
         // How do I load the fragments?
         // fragmentContainer = findViewById(R.id.fragment_container)
 
-        supportFragmentManager
+        contactEntriesFragment = supportFragmentManager.findFragmentById(R.id.contact_entries_fragment)
+            as ContactEntriesFragment
+
+        fragmentContainer = findViewById(R.id.fragment_container)
+
+        largeScreen = fragmentContainer != null
+        /*supportFragmentManager
             .beginTransaction()
             .add(
                 R.id.fragment_container,
@@ -84,7 +90,7 @@ class MainActivity : AppCompatActivity(),
                 getString(R.string.list_fragment_tag)
             )
             .addToBackStack(null)
-            .commit()
+            .commit()*/
 
 
         fab.setOnClickListener { view ->
@@ -177,12 +183,27 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun showContactDetail(contact: ContactList) {
-        val contactDetailIntent = Intent(this, ContactDetailActivity::class.java)
 
-        contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)
+        if (!largeScreen) {
+            val contactDetailIntent = Intent(this, ContactDetailActivity::class.java)
 
-        // "startActivity" is a native method.
-        startActivityForResult(contactDetailIntent, CONTACT_INTERACTION_REQUEST_CODE)
+            contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)
+
+            startActivityForResult(contactDetailIntent, CONTACT_INTERACTION_REQUEST_CODE)
+        } else {
+            title = contact.mobileNumber
+
+            contactInteractionsFragment = ContactInteractionsFragment.newInstance(contact)
+
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragment_container,
+                    contactInteractionsFragment!!,
+                    getString(R.string.contact_fragment_tag)
+                )
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onContactItemClicked(contact: ContactList) {
