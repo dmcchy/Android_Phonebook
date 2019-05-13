@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity(),
         ContactEntriesFragment.OnFragmentInteractionListener,
         ContactInteractionsFragment.OnFragmentInteractionListener
 {
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private var largeScreen = false
+
+    private var contactEntriesFragment: ContactEntriesFragment =
+        ContactEntriesFragment.newInstance()
     private var contactInteractionsFragment: ContactInteractionsFragment? = null
 
     companion object {
@@ -36,13 +36,22 @@ class MainActivity : AppCompatActivity(),
     private val contactDataManager: ContactDataManager = ContactDataManager(this)
 
     private var fragmentContainer: FrameLayout? = null
-    private var contactEntriesFragment: ContactEntriesFragment =
-        ContactEntriesFragment.newInstance()
-
     private lateinit var contactEntriesRecyclerView: RecyclerView
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
+
+        // Persist the new data here.
+        title = resources.getString(R.string.app_name)
+
+        // I got it, tell my new fragment that I launched to save it.
+        Log.v("HEllo", "lol")
+
+        contactEntriesFragment
 
     }
 
@@ -56,10 +65,7 @@ class MainActivity : AppCompatActivity(),
                 // Wrap it in a parcelable entry.
                 var contact: ContactList = data.getParcelableExtra(INTENT_LIST_KEY)
 
-                // contactEntriesFragment.saveInteractions(contact)
-
-                // contactDataManager.saveList(data.getParcelableExtra(INTENT_LIST_KEY))
-                // updateContactEntries()
+                contactEntriesFragment.saveInteractions(contact)
             }
         }
     }
@@ -192,7 +198,12 @@ class MainActivity : AppCompatActivity(),
 
     private fun showContactDetail(contact: ContactList) {
 
-        if (!largeScreen || true) {
+        var isNotLargeScreen = !largeScreen
+
+        // Override to always show small screen if uncommented.
+        // isNotLargeScreen = !largeScreen || true
+
+        if (isNotLargeScreen) {
             val contactDetailIntent = Intent(this, ContactDetailActivity::class.java)
 
             contactDetailIntent.putExtra(INTENT_LIST_KEY, contact)

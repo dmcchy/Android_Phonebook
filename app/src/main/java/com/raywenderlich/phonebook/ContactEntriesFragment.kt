@@ -30,7 +30,7 @@ class ContactEntriesFragment : Fragment(),
         updateContactEntries()
     }
 
-    private fun updateContactEntries() {
+    fun updateContactEntries() {
         val contactEntries = contactDataManager.readLists()
         contactEntriesRecyclerView.adapter = ContactEntriesRecyclerViewAdapter(
             contactEntries,
