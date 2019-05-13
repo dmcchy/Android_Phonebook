@@ -51,8 +51,6 @@ class MainActivity : AppCompatActivity(),
         // I got it, tell my new fragment that I launched to save it.
         Log.v("HEllo", "lol")
 
-        contactEntriesFragment
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,24 +171,8 @@ class MainActivity : AppCompatActivity(),
 
             contactEntriesFragment.addContact(contact)
             dialog.dismiss()
-            // showContactDetail(contact)
 
-            /*var contact = ContactList(
-                mobileNumberText.text.toString(),
-                lastNameText.text.toString(),
-                firstNameText.text.toString()
-            )
-
-            contactDataManager.saveList(contact)
-
-            // Also add it to the recycler adapter.
-            val recyclerAdapter = contactEntriesRecyclerView.adapter as
-                    ContactEntriesRecyclerViewAdapter
-            recyclerAdapter.addContact(contact)
-
-            dialog.dismiss()
-            showContactDetail(contact)*/
-
+            // Add list later.
         }
 
         builder.create().show()
